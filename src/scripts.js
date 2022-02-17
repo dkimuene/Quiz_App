@@ -52,6 +52,8 @@ function init() {
     const submitBtn = document.getElementById('submit');
     
     let currentQuestion = 0;
+    let answer = undefined;
+    let score = 0;
     
     loadQuiz();
     
@@ -66,12 +68,35 @@ function init() {
         d_text.innerText = currentQuizData.d;
      
     }
+
+    function getSelected(){
+        const answerEls = document.querySelectorAll('.answer');
+
+        answerEls.forEach(answerEl => {
+            if(answerEl.checked){
+                answer = answerEl.id
+            }
+
+        });
+        return answer;
+    }
     submitBtn.addEventListener("click", () => {
-        currentQuestion++;
-        if(currentQuestion < quizData.length){
-            loadQuiz();
-        } else {
-            alert('You are finish')
+        
+        let answer = getSelected();
+        console.log(answer)
+        if(answer){
+            if (answer === quizData[currentQuestion]){
+                console.log(score);
+                score++;
+                console.log(score);
+
+            }
+            currentQuestion++;
+            if(currentQuestion < quizData.length){
+                loadQuiz();
+            } else {
+                alert(`Your score: ${score}`)
+            }
         }
     })
     
